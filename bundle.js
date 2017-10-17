@@ -299,6 +299,18 @@ var app = new _vue2.default({
         newTodo: '',
         todoList: []
     },
+    created: function created() {
+        var _this = this;
+
+        window.onbeforeunload = function () {
+            //在页面关闭之前
+            var dataString = JSON.stringify(_this.todoList); //把data的数据转成字符串
+            window.localStorage.setItem('myTodos', dataString);
+        };
+        var oldDataString = window.localStorage.getItem('myTodos');
+        var oldData = JSON.parse(oldDataString);
+        this.todoList = oldData || [];
+    },
     methods: {
         addTodo: function addTodo() {
             this.todoList.push({
@@ -307,6 +319,10 @@ var app = new _vue2.default({
                 done: false
             });
             this.newTodo = '';
+        },
+        removeTodo: function removeTodo(todo) {
+            var index = this.todoList.indexOf(todo);
+            this.todoList.splice(index, 1);
         }
     }
 });
