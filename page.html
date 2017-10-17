@@ -6,21 +6,66 @@
 
 <body>
     <div id="app">
-        <div class="newTodo">
-            <input type="text" v-model="newTodo" @keypress.enter="addTodo">
+        <section id="signInAndSignUp" v-if="!currentUser">
+            <div>
+                <label>
+                    <input type="radio" v-model="actionType" value="signUp">注册</label>
+                <label>
+                    <input type="radio" v-model="actionType" value="logIn">登录</label>
+            </div>
+            <div class="signUp" v-if="actionType==='signUp'">
+                <form @submit.prevent=signUp>
+                    <div class="formRow">
+                        用户名
+                        <input type="text" v-model="formData.username">
+                    </div>
+                    <div class="formRow">
+                        密码
+                        <input type="password" v-model="formData.password">
+                    </div>
+                    <div class="formActions">
+                        <input type="submit" value="注册">
+                    </div>
+                </form>
+            </div>
+            <div class="signIn" v-if="actionType==='logIn'">
+                <form @submit.prevent=logIn>
+                    <div class="formRow">
+                        用户名
+                        <input type="text" v-model="formData.username">
+                    </div>
+                    <div class="formRow">
+                        密码
+                        <input type="password" v-model="formData.password">
+                    </div>
+                    <div class="formActions">
+                        <input type="submit" value="登录">
+                    </div>
+                </form>
+            </div>
+        </section>
 
-        </div>
-        <ol class="todos">
-            <li v-for="todo in todoList">
-                <input type="checkbox" v-model="todo.done">
-                    {{todo.title}}
 
-                <span v-if="todo.done">已完成</span>
-                <span v-else>未完成</span>
+        <section id="todo" v-if="currentUser">
+            <div class="logout">
+                <p>{{currentUser.username}}</p>
+                <button @click="logout">登出</button>
+            </div>
+            <div class="newTask">
+                <input type="text" v-model="newTodo" @keypress.enter="addTodo">
 
-                <button @click="removeTodo(todo)">X</button>
-            </li>
-        </ol>
+            </div>
+            <ol class="todos">
+                <li v-for="todo in todoList">
+                    <input type="checkbox" v-model="todo.done"> {{todo.title}}
+
+                    <span v-if="todo.done">已完成</span>
+                    <span v-else>未完成</span>
+                    <span>{{todo.createdAt}}</span>
+                    <button @click="removeTodo(todo)">X</button>
+                </li>
+            </ol>
+        </section>
 
     </div>
 
