@@ -291,17 +291,23 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _bar = __webpack_require__(6);
-
-var _bar2 = _interopRequireDefault(_bar);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _bar2.default)();
 var app = new _vue2.default({
     el: '#app',
     data: {
-        message: 'Hello Gavin!'
+        newTodo: '',
+        todoList: []
+    },
+    methods: {
+        addTodo: function addTodo() {
+            this.todoList.push({
+                title: this.newTodo,
+                createdAt: new Date(),
+                done: false
+            });
+            this.newTodo = '';
+        }
     }
 });
 
@@ -11125,21 +11131,6 @@ exports.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = bar;
-function bar() {
-    alert('Hello Webpack!');
-}
 
 /***/ })
 /******/ ]);
